@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- script by saepulfariz 14/03/2023 -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COUNT DOWN RAMADHAN - PROFA (Programmer Fasilkom)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+        }
+
+        body {
+            background: #121212;
+            position: fixed;
+        }
+
+        .loading {
+            width: 59vh;
+            margin-left: 50vw;
+            transform: translateX(-29.5vh);
+            height: 100%;
+            position: fixed;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            background: #121212;
+        }
+
+        .loading .content {
+            text-align: center;
+            font-weight: 500;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .loading img {
+            width: 60px;
+            width: 60px;
+        }
+
+        .background1 {
+            height: 100vh;
+            width: 59vh;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: calc(50vw - 29.5vh);
+            /* background-color: #121212;
+            background-image: url("https://i.postimg.cc/ZnQqN90V/bg2.jpg"); */
+            background-size: cover;
+            filter: brightness(70%);
+        }
+
+        .background2 {
+            margin: auto;
+            width: 59vh;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: calc(50vw - 29.5vh);
+            /* background-color: #c93434; */
+            background-color: #121212;
+            /* background-image: url("https://i.postimg.cc/CMfrhSQG/bg1.jpg"); */
+            background-size: cover;
+            filter: brightness(70%);
+            background-position-x: center;
+        }
+
+        .copyright {
+            text-decoration: none;
+            position: fixed;
+            bottom: 10px;
+            font-size: 15px;
+            width: 100px;
+            margin-left: 50vw;
+            transform: translateX(-45px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: white;
+            z-index: 99;
+            opacity: 0.5;
+        }
+
+        .main {
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            /* background: blue; */
+        }
+
+        .main .content {
+            /* width: 100%; */
+            overflow-x: hidden;
+            width: 59vh;
+            margin: auto;
+        }
+
+        @keyframes goyang {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(5px);
+            }
+
+            100% {
+                transform: translateY(10);
+            }
+        }
+
+        .kelip {
+            animation: kelip 1200ms infinite ease;
+        }
+
+        @keyframes kelip {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .background1 {
+                width: 100vw;
+                left: 0;
+            }
+
+            .main .content {
+                width: 100%;
+            }
+
+            .loading {
+                width: 100%;
+                margin-left: 0;
+                transform: none;
+            }
+
+            .background2 {
+                width: 100vw;
+                left: 0;
+            }
+        }
+
+        .border-radius {
+            border-radius: 15px !important;
+        }
+
+        /*LOADING*/
+        @keyframes loadingmy {
+            0% {
+                transform: rotate(0);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loadingmy div {
+            box-sizing: border-box !important;
+        }
+
+        .loadingmy>div {
+            position: absolute;
+            width: 74px;
+            height: 74px;
+            top: 13px;
+            left: 13px;
+            border-radius: 50%;
+            border: 10px solid #000;
+            border-color: #e81a46 transparent #e81a46 transparent;
+            animation: loadingmy 1s linear infinite;
+        }
+
+        .loadingmy>div:nth-child(2) {
+            border-color: transparent;
+        }
+
+        .loadingmy>div:nth-child(2) div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(45deg);
+        }
+
+        .loadingmy>div:nth-child(2) div:before,
+        .loadingmy>div:nth-child(2) div:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            left: 22px;
+            background: #e81a46;
+            border-radius: 50%;
+            box-shadow: 0 64px 0 0 #e81a46;
+        }
+
+        .loadingmy>div:nth-child(2) div:after {
+            left: -10px;
+            top: 22px;
+            box-shadow: 64px 0 0 0 #e81a46;
+        }
+
+        .myloading {
+            width: 52px;
+            height: 52px;
+            display: inline-block;
+            overflow: hidden;
+            background: #121212;
+        }
+
+        .loadingmy {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform: translateZ(0) scale(0.52);
+            backface-visibility: hidden;
+            transform-origin: 0 0;
+        }
+
+        .loadingmy div {
+            box-sizing: content-box;
+        }
+
+        .head {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .prepare {
+            font-family: 'Sacramento', cursive;
+            color: yellow;
+            font-size: 25px;
+            margin-bottom: -20px;
+        }
+
+        .ramadhan {
+            /* font-family: 'Luckiest Guy', cursive; */
+            font-family: 'Tilt Warp', cursive;
+            color: white;
+            font-size: 40px;
+            margin: 0;
+            padding: 0;
+        }
+
+        #count-ramadhan {
+            /* font-family: 'Luckiest Guy', cursive; */
+            /*font-family: 'Tilt Warp', cursive;*/
+            color: white;
+            font-size: 240px;
+            font-weight: 600;
+            /* margin-bottom: -40px; */
+        }
+
+        .days-left {
+            /* font-family: 'Luckiest Guy', cursive; */
+            font-family: 'Tilt Warp', cursive;
+            color: white;
+            font-size: 25px;
+            margin-top: -50px;
+        }
+
+        .w3-round-xlarge {
+            border-radius: 16px !important;
+        }
+
+        .w3-progress-container {
+            width: 100%;
+            height: 0.7em;
+            position: relative;
+            background-color: #f1f1f1;
+        }
+
+        .w3-round-xlarge {
+            border-radius: 16px !important;
+        }
+
+        .w3-progressbar {
+            /* background-color: #757575; */
+            background-color: #A98A00;
+            height: 100%;
+            position: absolute;
+            line-height: inherit;
+        }
+
+        .reamining {
+            margin-top: 30px;
+            font-size: 13px;
+        }
+
+        #bg-logo {
+            margin: auto;
+            width: 130px;
+            display: flex;
+            justify-content: center;
+            padding: 5px;
+            background-color: white;
+            border-radius: 0px 0px 10px 10px;
+        }
+
+        #logo img {
+            width: 40px;
+        }
+
+        #text-persen {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+
+        .block-caption {
+            width: 280px;
+            margin: auto;
+            font-size: 16px;
+            margin-top: 30px;
+        }
+
+        #caption,
+        #count-ramadhan {
+            cursor: -webkit-grab;
+            cursor: grab;
+        }
+    </style>
+</head>
+
+<body onload="">
+    <audio id="linkmp3">OTW_RAMADHAN_CHECK.mp3</audio>
+    <div class="background1"></div>
+    <div class="background2"></div>
+    <div class="main">
+        <div class="content">
+            <div id="logo">
+                <div id="bg-logo" style="">
+                    <img src="https://github.com/saepulfariz/lainnya/raw/main/profa/Icon/Rounded/icon%202.png" alt="">
+                    <img src="https://github.com/saepulfariz/lainnya/raw/main/unsub/logo/himasi1.png" alt="">
+                    <img src="https://github.com/saepulfariz/lainnya/raw/main/unsub/logo/fasilkom1.png" alt="">
+                </div>
+            </div>
+            <div class="head">
+                <div style="margin-bottom: -30px;">
+                    <P class="prepare">Prepare For </P>
+                    <p class="ramadhan">Ramadhan</p>
+                </div>
+                <p id="count-ramadhan">0</p>
+                <p class="days-left">days left</p>
+                <p id="detail-countdown"></p>
+                <p class="reamining">Times remaining</p>
+                <div style="width: 160px;margin:auto;margin-top: 3px; display: flex;">
+                    <div style="width: 130px;margin:auto;margin-top: 5px;">
+                        <div class="w3-progress-container w3-round-xlarge">
+                            <div id="width-persen" class="w3-progressbar w3-round-xlarge" style="width:91%"></div>
+                        </div>
+                    </div>
+                    <p id="text-persen">91%</p>
+                </div>
+
+                <div class="block-caption">
+                    <p id="caption">
+                        Luka dan duka takkan berarti lagi jika Allah berkenan mengobati. Allah memang tidak memeluk
+                        ragamu,
+                        tapi jika Dia menemtramkan yang di dalam dadamu
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="https://www.instagram.com/saepulfariz" class="copyright">
+        <p><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-instagram"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
+            </svg> saepulfariz</p>
+    </a>
+    <script type="text/javascript">
+        var listBg = [
+            'https://images.unsplash.com/photo-1567095761054-7a02e69e5c43?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+            'https://images.unsplash.com/photo-1567359781514-3b964e2b04d6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=268&q=80',
+            'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+            'https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+            // 'https://images.unsplash.com/photo-1488554378835-f7acf46e6c98?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80',
+            'https://images.unsplash.com/photo-1493305457700-d3d24daf8c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+            'https://images.unsplash.com/photo-1552083974-186346191183?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+            'https://images.unsplash.com/photo-1567360425618-1594206637d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=268&q=80'
+        ];
+
+        var listCaptionPuasa = [
+            'Kamu sengaja begadang pas puasa kan? Siang tidur, pas bangun udah magrib aja.',
+            'Kirain udah bedug magrib, nggak tahunya tetangga lagi jemur kasur.',
+            'Diduga tidak kuat menunggu adzan magrib, seorang jomblo nekat azan sendiri.',
+            'Percuma banyak yang ngajak buka puasa bersama kalau nggak ada yang ngajak hidup bersama.',
+            'Selamat berbuka puasa. Apa pun makanannya, yang penting jangan makan ati, nanti nyesek.',
+            'Janji kamu manis banget deh. Serius. Gimana kalau... janji kamu dijadiin takjil aja?',
+            'Berbukalah dengan yang sayang, karena yang manis aja belum tentu sayang.'
+        ];
+
+
+        var listCaption = [
+            '"Ya Allah, muliakan dan sayangilah saudariku ini. Berikanlah kebahagiaan baginya dan keluarganya. Berkahi rezekinya dan kuatkan imannya. Berikanlah kenikmatan ibadahnya dan jauhkan dari segala fitnah. Marhaban ya Ramadhan."',
+            '"Semoga di bulan Ramadhan ini, ibadah puasa dan amal kebaikan kita diterima oleh Allah SWT,  serta semua dosa kita diampuni oleh-Nya. Marhaban ya Ramadhan 1444 H."',
+            '"Alhamdulillah, berkat nikmat Allah SWT kita dapat bertemu lagi dengan bulan puasa Ramadan yang penuh dengan hikmah. Semoga Ramadan ini ibadah kita bisa lebih baik dari Ramadan sebelumnya."',
+            '"Di bulan Ramadhan ini kita umat Muslim berperang sekuat tenaga melawan hawa nafsu. Semoga Ramadhan 1444 H ini kita semua dapat menuju kemenangan hati dalam Idul Fitri."',
+            '"Jadikan Ramadan kali ini sebagai bulan penebus dosa dan bulan untuk meraih ampunan dengan memperbanyak amal kebaikan dan ibadah lainnya. Selamat menunaikan ibadah puasa 2023."',
+            '"Permulaan Ramadhan itu adalah rahmat, pertengahannya adalah keampunan dan penghujungnya adalah kebebasan dari api neraka."',
+            '"Bulan penuh berkah segera tiba. Marhaban ya Ramadhan, sambut bulan suci dengan penuh kebahagiaan."'
+        ];
+
+        var countDownDate = new Date("Mar 23, 2023 00:00:01").getTime();
+
+
+        function generateContent() {
+            var now = new Date().getTime();
+
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+            document.querySelector(".background2").style.backgroundImage = "url('" + listBg[days - 1] + "')";
+            document.querySelector("#caption").innerHTML = listCaption[days - 1];
+        }
+
+
+        document.getElementById('caption').addEventListener('click', function () {
+            var randomNum = Math.floor(Math.random() * listBg.length);
+            document.querySelector(".background2").style.backgroundImage = "url('" + listBg[randomNum] + "')";
+            document.querySelector("#caption").innerHTML = listCaption[randomNum];
+        })
+
+
+        function takeScreenshot() {
+            var screenshot = document.documentElement
+                .cloneNode(true);
+            screenshot.style.pointerEvents = 'none';
+            screenshot.style.overflow = 'hidden';
+            screenshot.style.webkitUserSelect = 'none';
+            screenshot.style.mozUserSelect = 'none';
+            screenshot.style.msUserSelect = 'none';
+            screenshot.style.oUserSelect = 'none';
+            screenshot.style.userSelect = 'none';
+            screenshot.dataset.scrollX = window.scrollX;
+            screenshot.dataset.scrollY = window.scrollY;
+            var blob = new Blob([screenshot.outerHTML], {
+                type: 'text/html'
+            });
+            return blob;
+        }
+
+        function screeshoot() {
+            window.URL = window.URL || window.webkitURL;
+            window.open(window.URL
+                .createObjectURL(takeScreenshot()));
+        }
+
+        const captureScreenshot = async () => {
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            const screenshot = document.createElement("screenshot");
+
+            try {
+                const captureStream = await navigator.mediaDevices.getDisplayMedia();
+                screenshot.srcObject = captureStream;
+                context.drawImage(screenshot, 0, 0, window.width, window.height);
+                const frame = canvas.toDataURL("image/png");
+                captureStream.getTracks().forEach(track => track.stop());
+                window.location.href = frame;
+            } catch (err) {
+                console.error("Error: " + err);
+            }
+        };
+
+        document.getElementById('count-ramadhan').addEventListener('click', function () {
+            // screeshoot();
+            // captureScreenshot();
+        })
+
+
+        var x = setInterval(function () {
+
+            var now = new Date().getTime();
+
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById('count-ramadhan').innerHTML = days;
+            document.getElementById('text-persen').innerHTML = (100 - days) + '%';
+            document.getElementById('width-persen').style.width = (100 - days) + '%';
+
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("detail-countdown").innerHTML = hours + "h " +
+                minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById('count-ramadhan').innerHTML = 0;
+                document.getElementById('text-persen').innerHTML = (100 - 0) + '%';
+                document.getElementById('width-persen').style.width = (100 - 0) + '%';
+                document.querySelector("#caption").innerHTML =
+                    '"Selamat menjalankan ibadah puasa 1444 H. Semoga kita mendapat hikmah di bulan suci Ramadhan, bukan hanya menahan lapar dan haus semata."';
+            }
+        }, 1000);
+
+
+
+        const swalo = Swal.mixin({
+            confirmButtonColor: "#23a542",
+            allowOutsideClick: false,
+            showCancelButton: false,
+            customClass: {
+                popup: "border-radius",
+            },
+        });
+        // ======================================
+
+
+        swalo.fire({
+            imageUrl: "https://i.postimg.cc/hjYkstDg/cutie1.gif",
+            imageHeight: 120,
+            confirmButtonText: "Oke",
+            title: "Coming Soon Ramadhan 1444 H",
+        }).then(function () {
+            audio = new Audio('' + linkmp3.innerHTML);
+            audio.play();
+            generateContent();
+        }, function (dismiss) {
+            if (dismiss == 'cancel') {}
+        });
+
+        $(window).on("load", function () {})
+    </script>
+</body>
+
+</html>
